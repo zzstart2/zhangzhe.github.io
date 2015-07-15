@@ -12,69 +12,106 @@
 <script>
 var boxcount;
 boxcount = 0;
+var bottomFlag = 0;
+
+function ReSizePic(ThisPic){
+    var RePicWidth = 200;
+    var TrueWidth = ThisPic.width;
+    var TrueHeight = ThisPic.height;
+    var Multiple = TrueWidth / RePicWidth;
+    ThisPic.width = RePicWidth;
+    ThisPic.height = TrueHeight / Multiple;
+}
+
 function createBox(){
   $.ajax({
    type: "GET",
-   url: "loadlist 2.txt",
+       url: "loadlist 2.txt",
    data: "json",
    success: function(data){
      var list = JSON.parse(data);
-      var i = boxcount;
-      if(list.piclist.length > boxcount){
-        var box = document.createElement("div");
-        box.id = 'box'+boxcount;
-        box.setAttribute('class', 'box');
-        document.getElementById("base").appendChild(box);
-        var picPreview = document.createElement("div");
-        picPreview.id = 'pre'+boxcount;
-        picPreview.setAttribute('class', 'picPreview');
-        document.getElementById("box"+boxcount).appendChild(picPreview);
-        var img = new Image();
-        img.src = list.piclist[i].url;
-        img.id = 'pic'+boxcount;
-        box.appendChild(img);
-        document.getElementById("pre"+boxcount).appendChild(img);
-        $('#pic'+boxcount).on('click',function(img){
-          console.log("clicked");
-          document.body.style.overflow = 'hidden';
-            var basic = document.createElement("div");
-            basic.id = 'picWholeBase';
-            basic.setAttribute('class', 'picWholeBase');
-            document.body.appendChild(basic);
-            var picBase = document.getElementById('picWholeBase');
-            picBase.style.top = document.body.scrollTop + "px";
-            picBase.style.height = document.documentElement.clientHeight + 'px';
+     if(list.piclist.length > boxcount){
+          var i = boxcount;
+          var box = document.createElement("div");
+          box.id = 'box'+boxcount;
+          box.setAttribute('class', 'box');
+          document.getElementById("base").appendChild(box);
+          var picPreview = document.createElement("div");
+          picPreview.id = 'pre'+boxcount;
+          picPreview.setAttribute('class', 'picPreview');
+          document.getElementById("box"+boxcount).appendChild(picPreview);
+          var img = new Image();
+          img.src = 'small'+list.piclist[i].url;
+          img.id = 'smallpic'+boxcount;
+          box.appendChild(img);
+          document.getElementById("pre"+boxcount).appendChild(img);
+          $('#smallpic'+boxcount).on('click',function(event){
+              document.body.style.overflow = 'hidden';
+              var basic = document.createElement("div");
+              basic.id = 'picWholeBase';
+              basic.setAttribute('class', 'picWholeBase');
+              document.body.appendChild(basic);
+              var picBase = document.getElementById('picWholeBase');
+              picBase.style.top = document.body.scrollTop + "px";
+              picBase.style.height = document.documentElement.clientHeight + 'px';
 
-            var esc = document.createElement("div");
-            esc.setAttribute('class','escCancel');
-            document.getElementById('picWholeBase').appendChild(esc);
-            esc.innerText = "Esc键返回浏览";
-            $('#escCancel').on('click',function(event){
-              document.getElementById('picWholeBase').remove();
-              document.body.style.overflow = 'visible';
-              document.getElementById('escCancel').remove();
-            });
+              var esc = document.createElement("div");
+              esc.setAttribute('class','escCancel');
+              document.getElementById('picWholeBase').appendChild(esc);
+              esc.innerText = "Esc键返回浏览";
+              $('#escCancel').on('click',function(event){
+                document.getElementById('picWholeBase').remove();
+                document.body.style.overflow = 'visible';
+                document.getElementById('escCancel').remove();
+              });
 
-            var picSrc = document.createElement("div");
-            picSrc.id = 'picSrc'+boxcount;
-            picSrc.setAttribute('class', 'picSrc');
-            document.getElementById('picWholeBase').appendChild(picSrc);
+              var picSrc = document.createElement("div");
+              picSrc.id = 'picSrc'+boxcount;
+              picSrc.setAttribute('class', 'picSrc');
+              document.getElementById('picWholeBase').appendChild(picSrc);
+              var imgSrc = new Image();
+              imgSrc.src = list.piclist[i].url;
+              imgSrc.id = 'pic'+boxcount;
+              box.appendChild(imgSrc);
+              picSrc.appendChild(imgSrc);
 
-            var img = new Image();
-            img.src = list.piclist[i].url;
-            img.id = 'pic'+boxcount;
-            box.appendChild(img);
-            picSrc.appendChild(img);
+              var comment = document.createElement("div");
+              comment.setAttribute('class','picComment');
+              document.getElementById('picWholeBase').appendChild(comment);
+              comment.innerHTML = list.piclist[i].comment;
 
-            var comment = document.createElement("div");
-            comment.setAttribute('class','picComment');
-            document.getElementById('picWholeBase').appendChild(comment);
-            console.log('sssssssss');
-            comment.innerHTML = list.piclist[i].comment;
-        });
-        boxcount ++;
+              var input = document.createElement('div');
+              input.id = 'input';
+              input.setAttribute('class', 'input');
+              comment.appendChild(input);
+
+              var inputbar = document.createElement('input');
+              inputbar.id = 'inputbar';
+              inputbar.value = "回车键输入";
+              input.appendChild(inputbar);
+
+              onkeydown = function(event){
+                if(event.keyCode == 13)
+                {
+                  inputbar.value = "";
+                  alert("其实是没有用的= =！");
+                }
+                if(event.keyCode == 27)
+                {
+                  document.getElementById('picWholeBase').remove();
+                  document.body.style.overflow = 'visible';
+                  document.getElementById('escCancel').remove();
+                }
+              }
+
+          });
+          boxcount ++;
       }
-   }
+      else if(bottomFlag === 0){
+        alert('没有更多了= =！');
+        bottomFlag = 1;
+      }
+    }
   });
 };
 
@@ -88,18 +125,38 @@ onkeydown = function(event){
   }
 }
 
-for(var start = 0; start < 15; start ++){
+for(var start = 0; start < 16; start ++){
   createBox();
 }
 
+var totalheight = 0;
 window.onscroll = function(){
-var t = document.documentElement.scrollTop || document.body.scrollTop;
-if( t > (document.body.scrollHeight - document.body.clientHeight) || (document.documentElement.scrollHeight - document.documentElement.clientHeight) ) {
-  for(var start = 0; start < 5; start ++){
-    createBox();
+  totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+
+  if ($(document).height() <= totalheight)
+  {
+      for(var i = 0; i < 10; i ++){createBox();}
   }
 }
-};
+
+var scrollFunc = function (e) {//鼠标滚轮方向判断
+     var direct = 0;
+     e = e || window.event;
+     if (e.wheelDelta) {
+         if (e.wheelDelta > 0) {
+             //alert("滑轮向上滚动");
+             bottomFlag = 0;
+         }
+         if (e.wheelDelta < 0) {
+             //alert("滑轮向下滚动");
+         }
+     }
+     ScrollText(direct);
+ }
+ if (document.addEventListener) {
+     document.addEventListener('DOMMouseScroll', scrollFunc, false);
+ }
+ window.onmousewheel = document.onmousewheel = scrollFunc;
 
 </script>
 </body>
