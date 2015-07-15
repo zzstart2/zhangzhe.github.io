@@ -103,6 +103,10 @@ function createBox(){
               document.getElementById('picWholeBase').appendChild(comment);
               comment.innerHTML = list.piclist[i].comment;
 
+              /*$('#picComment').onscroll = function(event){
+                //加载新的评论
+              }*/
+
               var input = document.createElement('div');//创建放置输入框的div
               input.id = 'input';
               input.setAttribute('class', 'input');
