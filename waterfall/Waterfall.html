@@ -7,10 +7,15 @@
   <script src="jquery.oLoader.min.js"></script>
 </head>
 <body>
+  <div class = banner >
+    <img src='images/banner1.jpg' id = 'banner1'>
+    <img src='images/banner2.jpg' id = 'banner2'>
+  </div>
 <div class = 'mainbody' id = 'base'>
 
 </div>
 <script>
+
 $(function(){
   $.oPageLoader();
 });
@@ -133,6 +138,19 @@ function createBox(){
   });
 };
 
+var bannerFlag1 = 1;
+var bannerFlag2 = 1;
+
+$('#banner1').click(function (event){
+  $('#banner1').slideUp();
+  bannerFlag1 = 0;
+});
+
+$('#banner2').click(function (event){
+  $('#banner2').slideUp();
+  bannerFlag2 = 0;
+});
+
 var Keyvalue = 27
 onkeydown = function(event){//esc退出返回原图
   if(event.keyCode == Keyvalue)
@@ -164,18 +182,36 @@ var scrollFunc = function (e) {//鼠标滚轮方向判断
          if (e.wheelDelta > 0) {
              //alert("滑轮向上滚动");
              bottomFlag = 0;
+             var y = document.body.scrollTop || document.documentElement.scrollTop;
+             if(y <= 0){
+               if(bannerFlag2 === 0){
+                 $('#banner2').slideDown();
+                 bannerFlag2 = 1;
+               }
+               else if(bannerFlag1 === 0){
+                 $('#banner1').slideDown();
+                 bannerFlag1 = 1;
+               }
+             }
          }
          if (e.wheelDelta < 0) {
              //alert("滑轮向下滚动");
+             var y = document.body.scrollTop || document.documentElement.scrollTop;
+               if(bannerFlag1 === 1){
+                 $('#banner1').slideUp();
+                 setTimeout(function(){bannerFlag1 = 0;},500);
+               }
+               else if(bannerFlag2 === 1 && bannerFlag1 === 0){
+                 $('#banner2').slideUp();
+                 bannerFlag2 = 0;
+               }
          }
      }
-     ScrollText(direct);
  }
  if (document.addEventListener) {
      document.addEventListener('DOMMouseScroll', scrollFunc, false);
  }
  window.onmousewheel = document.onmousewheel = scrollFunc;
-
 </script>
 </body>
 </html>
