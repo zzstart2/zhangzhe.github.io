@@ -186,9 +186,9 @@ var scrollFunc = function (e) {//鼠标滚轮方向判断
              if(y <= 0){
                if(bannerFlag2 === 0){
                  $('#banner2').slideDown();
-                 bannerFlag2 = 1;
+                 setTimeout(function(){bannerFlag2 = 1;},500);
                }
-               else if(bannerFlag1 === 0){
+               else if(bannerFlag1 === 0 && bannerFlag2 === 1){
                  $('#banner1').slideDown();
                  bannerFlag1 = 1;
                }
