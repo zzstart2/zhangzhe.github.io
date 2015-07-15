@@ -45,6 +45,16 @@ function createBox(){
           img.src = 'small'+list.piclist[i].url;
           img.id = 'smallpic'+boxcount;
           box.appendChild(img);
+          $(function(){
+            $('#smallpic'+boxcount).oLoader({
+              waitLoad: true,
+              fadeLevel: 0.9,
+              backgroundColor: '#fff',
+              style:0,
+              image: 'loader.gif'
+            });
+          });
+
           document.getElementById("pre"+boxcount).appendChild(img);
           $('#smallpic'+boxcount).on('click',function(event){
               document.body.style.overflow = 'hidden';
