@@ -4,6 +4,7 @@
   <link href="./style.css" rel="stylesheet" type="text/css"  media="all" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="jquery.oLoader.min.js"></script>
 </head>
 <body>
 <div class = 'mainbody' id = 'base'>
@@ -72,8 +73,16 @@ function createBox(){
               var imgSrc = new Image();
               imgSrc.src = list.piclist[i].url;
               imgSrc.id = 'pic'+boxcount;
-              box.appendChild(imgSrc);
               picSrc.appendChild(imgSrc);
+              $(function(){
+                $('#pic'+boxcount).oLoader({
+                  waitLoad: true,
+                  fadeLevel: 0.9,
+                  backgroundColor: '#fff',
+                  style:0,
+                  image: 'loader.gif'
+                });
+              });
 
               var comment = document.createElement("div");
               comment.setAttribute('class','picComment');
