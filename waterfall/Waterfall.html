@@ -19,19 +19,10 @@ var boxcount;
 boxcount = 0;
 var bottomFlag = 0;
 
-function ReSizePic(ThisPic){
-    var RePicWidth = 200;
-    var TrueWidth = ThisPic.width;
-    var TrueHeight = ThisPic.height;
-    var Multiple = TrueWidth / RePicWidth;
-    ThisPic.width = RePicWidth;
-    ThisPic.height = TrueHeight / Multiple;
-}
-
 function createBox(){
   $.ajax({
    type: "GET",
-       url: "loadlist 2.txt",
+   url: "loadlist 2.txt",
    data: "json",
    success: function(data){
      var list = JSON.parse(data);
@@ -58,7 +49,6 @@ function createBox(){
               image: 'loader.gif'
             });
           });
-
           document.getElementById("pre"+boxcount).appendChild(img);
           $('#smallpic'+boxcount).on('click',function(event){
               document.body.style.overflow = 'hidden';
@@ -73,7 +63,7 @@ function createBox(){
               var esc = document.createElement("div");
               esc.setAttribute('class','escCancel');
               document.getElementById('picWholeBase').appendChild(esc);
-              esc.innerText = "Esc键返回浏览";
+              esc.innerText = "Esc键或点击图片返回浏览";
               $('#escCancel').on('click',function(event){
                 document.getElementById('picWholeBase').remove();
                 document.body.style.overflow = 'visible';
@@ -88,32 +78,37 @@ function createBox(){
               imgSrc.src = list.piclist[i].url;
               imgSrc.id = 'pic'+boxcount;
               picSrc.appendChild(imgSrc);
-              $(function(){
+              $(function(){//图片加载动画
                 $('#pic'+boxcount).oLoader({
                   waitLoad: true,
-                  fadeLevel: 0.9,
+                  fadeLevel: 0.5,
                   backgroundColor: '#fff',
                   style:0,
                   image: 'loader.gif'
                 });
               });
 
-              var comment = document.createElement("div");
+              $('#pic'+boxcount).on('click',function(event){
+                document.getElementById('picWholeBase').remove();
+                document.body.style.overflow = 'visible';
+                document.getElementById('escCancel').remove();
+              });
+              var comment = document.createElement("div");//创建评论区
               comment.setAttribute('class','picComment');
               document.getElementById('picWholeBase').appendChild(comment);
               comment.innerHTML = list.piclist[i].comment;
 
-              var input = document.createElement('div');
+              var input = document.createElement('div');//创建放置输入框的div
               input.id = 'input';
               input.setAttribute('class', 'input');
               comment.appendChild(input);
 
-              var inputbar = document.createElement('input');
+              var inputbar = document.createElement('input');//创建输入框
               inputbar.id = 'inputbar';
-              inputbar.value = "回车键输入";
+              inputbar.value = "回车输入评论~~";
               input.appendChild(inputbar);
 
-              onkeydown = function(event){
+              onkeydown = function(event){//输入评论后的事件
                 if(event.keyCode == 13)
                 {
                   inputbar.value = "";
@@ -130,8 +125,8 @@ function createBox(){
           });
           boxcount ++;
       }
-      else if(bottomFlag === 0){
-        alert('没有更多了= =！');
+      else if(bottomFlag === 0){//图片加载完毕后提示
+        alert("已经没有了囧");
         bottomFlag = 1;
       }
     }
@@ -139,7 +134,7 @@ function createBox(){
 };
 
 var Keyvalue = 27
-onkeydown = function(event){
+onkeydown = function(event){//esc退出返回原图
   if(event.keyCode == Keyvalue)
   {
     document.getElementById('picWholeBase').remove();
@@ -148,12 +143,12 @@ onkeydown = function(event){
   }
 }
 
-for(var start = 0; start < 16; start ++){
+for(var start = 0; start < 20; start ++){//页面开始时加载20张图片
   createBox();
 }
 
 var totalheight = 0;
-window.onscroll = function(){
+window.onscroll = function(){//监控是否滚动到底
   totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
 
   if ($(document).height() <= totalheight)
