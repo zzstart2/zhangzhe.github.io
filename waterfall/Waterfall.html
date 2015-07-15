@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="./style.css" rel="stylesheet" type="text/css"  media="all" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+<div class = 'mainbody' id = 'base'>
+
+</div>
+<script>
+var boxcount;
+boxcount = 0;
+function createBox(){
+  $.ajax({
+   type: "POST",
+   url: "loadlist 2.json",
+   data: "json",
+   success: function(data){
+     var list = JSON.parse(data);
+      var i = boxcount;
+      if(list.piclist.length > boxcount){
+        var box = document.createElement("div");
+        box.id = 'box'+boxcount;
+        box.setAttribute('class', 'box');
+        document.getElementById("base").appendChild(box);
+        var picPreview = document.createElement("div");
+        picPreview.id = 'pre'+boxcount;
+        picPreview.setAttribute('class', 'picPreview');
+        document.getElementById("box"+boxcount).appendChild(picPreview);
+        var img = new Image();
+        img.src = list.piclist[i].url;
+        img.id = 'pic'+boxcount;
+        box.appendChild(img);
+        document.getElementById("pre"+boxcount).appendChild(img);
+        $('#pic'+boxcount).on('click',function(img){
+          console.log("clicked");
+          document.body.style.overflow = 'hidden';
+            var basic = document.createElement("div");
+            basic.id = 'picWholeBase';
+            basic.setAttribute('class', 'picWholeBase');
+            document.body.appendChild(basic);
+            var picBase = document.getElementById('picWholeBase');
+            picBase.style.top = document.body.scrollTop + "px";
+            picBase.style.height = document.documentElement.clientHeight + 'px';
+
+            var esc = document.createElement("div");
+            esc.setAttribute('class','escCancel');
+            document.getElementById('picWholeBase').appendChild(esc);
+            esc.innerText = "Esc键返回浏览";
+            $('#escCancel').on('click',function(event){
+              document.getElementById('picWholeBase').remove();
+              document.body.style.overflow = 'visible';
+              document.getElementById('escCancel').remove();
+            });
+
+            var picSrc = document.createElement("div");
+            picSrc.id = 'picSrc'+boxcount;
+            picSrc.setAttribute('class', 'picSrc');
+            document.getElementById('picWholeBase').appendChild(picSrc);
+
+            var img = new Image();
+            img.src = list.piclist[i].url;
+            img.id = 'pic'+boxcount;
+            box.appendChild(img);
+            picSrc.appendChild(img);
+
+            var comment = document.createElement("div");
+            comment.setAttribute('class','picComment');
+            document.getElementById('picWholeBase').appendChild(comment);
+            console.log('sssssssss');
+            comment.innerHTML = list.piclist[i].comment;
+        });
+        boxcount ++;
+      }
+   }
+  });
+};
+
+var Keyvalue = 27
+onkeydown = function(event){
+  if(event.keyCode == Keyvalue)
+  {
+    document.getElementById('picWholeBase').remove();
+    document.body.style.overflow = 'visible';
+    document.getElementById('escCancel').remove();
+  }
+}
+
+for(var start = 0; start < 15; start ++){
+  createBox();
+}
+
+window.onscroll = function(){
+var t = document.documentElement.scrollTop || document.body.scrollTop;
+if( t > (document.body.scrollHeight - document.body.clientHeight) || (document.documentElement.scrollHeight - document.documentElement.clientHeight) ) {
+  for(var start = 0; start < 5; start ++){
+    createBox();
+  }
+}
+};
+
+</script>
+</body>
+</html>
