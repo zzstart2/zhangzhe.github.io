@@ -1,0 +1,175 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+  <script src="https://code.jquery.com/jquery.js"></script>
+<link href="./style.css" rel="stylesheet" type="text/css"  media="all" />
+</head>
+<body>
+  <div class="topbar">
+    <input class="userButton" type="button" value="All users" id="allUsers">
+  </div>
+  <div class="signinBase" id="signinBase">
+    <div class="signinAlert">
+      <div class='chatRoom toolbar'>
+        <div>
+          <label for="nameInput" style="position: relative">Username:</label>
+          <br>
+          <input type='text' id='loginNameInput'  placeholder='Type your username'>
+        </div>
+        <div>
+          <label for="nameInput" style="position: relative">Password:</label>
+          <br>
+          <input type='text' id='loginPasswordInput'  placeholder='Type your password'>
+        </div>
+        <input type="button" id="signupButton" value="Sign up">
+        <input type="button" id="loginButton" value="Log in">
+      </div>
+    </div>
+  </div>
+<!-- CHAT MARKUP -->
+<div class="mainbody">
+  <div class="chatArea">
+    <div class="chatRoom container" id='container'>
+      <header></header>
+      <ul id='messages' class="chat-messages"></ul>
+
+      <div class='chatRoom toolbar' id='sendMessage'>
+        <label for="nameInput">Type your message here:</label>
+        <br>
+        <input type='text' id='messageInput'  placeholder='Type a message...'>
+      </div>
+    </div>
+    <div class="userList" id="userListContainer">
+      <ul id='userList' class="userList"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT JAVACRIPT -->
+<script>
+  // CREATE A REFERENCE TO FIREBASE
+  var localusername = "Passerby";
+  var messagesRef = new Firebase('https://ericz-chatroom.firebaseio.com/');
+
+  // REGISTER DOM ELEMENTS
+  var messageField = $('#messageInput');
+  var nameField = localusername;
+  var messageList = $('#messages');
+  var userList = $('#users');
+
+  var userRef = new Firebase('https://chatroom-user-data.firebaseio.com');
+  var usernameField = $('#loginNameInput');
+  var userPasswordField = $('#loginPasswordInput');
+
+  //userRef.set(null);//清空登录数据
+  //messagesRef.set(null);//清空聊天记录
+
+  // LISTEN FOR KEYPRESS EVENT
+  messageField.keypress(function (e) {
+    if (e.keyCode == 13) {
+      //FIELD VALUES
+      var message = messageField.val();
+
+      var myTime = new Date();
+      localusername = localusername;
+      localuserID =  myTime.toLocaleTimeString();
+
+      //SAVE DATA TO FIREBASE AND EMPTY FIELD
+      messagesRef.push({name:localusername + "(" + myTime.toLocaleTimeString() + ")", text:message});
+      messageField.val('');
+    }
+  });
+
+  // Attach an asynchronous callback to read the data at our posts reference
+  messagesRef.on("value", function(snapshot) {
+    //console.log(snapshot.val());
+  }, function (errorObject) {
+    alert("The read failed: " + errorObject.code);
+  });
+  // Add a callback that is triggered for each chat message.
+  messagesRef.limitToLast(100).on('child_added', function (snapshot) {
+    //GET DATA
+    var data = snapshot.val();
+    var username = data.name || "anonymous";
+    var message = data.text;
+
+    //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
+    var messageElement = $("<li>");
+    var nameElement = $("<strong class='example-chat-username'></strong>");
+    nameElement.text(username);
+    messageElement.text(message).prepend(nameElement);
+
+    //ADD MESSAGE
+    messageList.append(messageElement);
+
+    //SCROLL TO BOTTOM OF MESSAGE LIST
+    messageList[0].scrollTop = messageList[0].scrollHeight;
+    changeHeight();
+  });
+
+  userRef.limitToLast(100).on('child_added', function (snapshot){
+    var data;
+    data = snapshot.val();
+    var username = data.name;
+    var userID = data.ID;
+    var userElement = $("<li>");
+    userElement.text(username+'('+userID+')');
+    $("#userList").append(userElement);
+    //console.log("ddd");
+  });
+
+  var getFlag = 'NULL';
+
+  $('#loginButton').on('click',function(event){
+      userRef.orderByChild("name").equalTo(usernameField.val()).on("child_added", function(snapshot) {
+      getFlag = snapshot.val();
+      console.log(getFlag);
+      if(getFlag.password === userPasswordField.val())
+      {
+        localusername = usernameField.val();
+        userPassword = userPasswordField.val();
+        console.log("login success");
+        $('#signinBase').remove();
+      }else{
+        alert('Wrong password!');
+      }
+      /*if(getFlag === "NULL"){
+        console.log("kkkkkkkkkkkk");}
+      localusername = usernameField.val();
+      userPassword = userPasswordField.val();
+      userRef.push({name:localusername, password:userPassword, online:'yes'});
+      $('#signinBase').remove();*/
+    });
+});
+
+$('#signupButton').on('click',function(event){
+  var myTime = new Date();
+  localusername = usernameField.val();
+  userPassword = userPasswordField.val();
+  userID = myTime.getTime();
+  userRef.push({name:localusername, password:userPassword, online:'yes', ID:userID});
+  document.getElementById('signinBase').remove();
+});
+  $("#allUsers").on("click",function(){
+    console.log("clicked!");
+    $("#userListContainer").slideToggle();
+  });
+
+  function changeHeight(){
+    var beforeHeight = $("#container").scrollTop();
+    $("#container").scrollTop($("#container").scrollTop()+20);
+    var afterHeight = $("#container").scrollTop();
+    if(beforeHeight == afterHeight){
+      //alert("ok");
+    }else{
+      setTimeout("changeHeight()",5);
+    };
+  };
+
+  setTimeout("changeHeight()",5);
+
+
+</script>
+</body>
+</html>
