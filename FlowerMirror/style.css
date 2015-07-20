@@ -1,0 +1,112 @@
+html{
+  display: block;
+}
+
+body{
+  display: block;
+}
+
+.mainbody{
+  width: 100%;
+  height: 100%;
+}
+
+.viewArea{
+  width: 800px;
+  height: 600px;
+}
+
+.centerCircle{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: 400px;
+  top: 200px;
+  z-index: 100;
+}
+
+#centerRed{
+  background-image: url(src/centerCircleRed.png);
+  background-position:center;
+  background-size: 80%;
+  background-repeat: no-repeat;
+}
+
+#centerBlue{
+  background-image: url(src/centerCircleBlue.png);
+  background-position:center;
+  background-size: 80%;
+  background-repeat: no-repeat;
+}
+
+.outerCircle{
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  left: 200px;
+  top: 0;
+  bottom: 0;
+  background-image: url(src/outerCircle.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 95%;
+}
+
+.smallPoint{
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  z-index: 101;
+}
+
+#pointRed{
+  background-image: url(src/smallPointRed.png);
+}
+
+#pointBlue{
+  background-image: url(src/smallPointBlue.png);
+}
+
+.leftbar{
+  position: absolute;
+  float: left;
+  width: 200px;
+  height: 600px;
+  background-color: rgba(100, 100, 100, 0.2);
+  text-align: center;
+  background-image: url(src/leftbarBG.png);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100%;
+}
+
+input{
+  width: 90%;
+  height: 50px;
+  position: relative;
+  margin: 10px auto 0 auto;
+}
+
+#start #top{
+  height: 30px;
+  background: #e3e3e3;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 0 1px 1px #f6f6f6;
+  box-shadow: inset 0 0 1px 1px #f6f6f6;
+  color: #333;
+  font: bold 12px/1 "helvetica neue", helvetica, arial, sans-serif;
+  padding: 8px 0 9px;
+  text-align: center;
+  text-shadow: 0 1px 0 #fff;
+  width: 150px;
+}
+
+#score{
+  text-align: center;
+  font-size: 30px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  box-shadow: none;
+  margin: 10px auto 20px auto;
+}
