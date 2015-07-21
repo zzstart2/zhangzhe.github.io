@@ -39,7 +39,6 @@ $("#plus").slideUp();
 function begin(){
   gameEnd = 0;
   sh = window.setInterval(function createPoint(){
-  console.log("asdfghhj");
   if(gameEnd === 0){
     var smallPoint = document.createElement("div");
     smallPoint.setAttribute("class", "smallPoint");
@@ -140,6 +139,7 @@ $(".scorePic").on('click', function(e){
 
 $("#startButton").on('click', function(e){
   gameEnd = 0;
+  localusername = $("#loginNameInput").val();
   begin();
   $('#signinBase').remove();
 });
@@ -194,18 +194,3 @@ function changeHeight(){
     setTimeout("changeHeight()",5);
   };
 };
-
-/*messagesRef.on("child_added", function(snapshot){
-  snapshot.forEach(function(e){
-    numofPlayed ++;
-  });
-});*/
-
-console.log(numofPlayed);
-
-/*function pressSound(i){
-  //document.all.song.src="test.mp3";
-  var audio = document.createElement('audio');
-  audio.src = "test.mp3"//
-  document.body.appendChild(audio);
-}*/
