@@ -125,6 +125,7 @@ function getDistanceToCenter(x, y, dx, dy){
 $("#start").on('click', function(e){
   gameEnd = 0;
   $('#signinBase').remove();
+  sh = window.clearInterval(sh);
   begin();
 });
 
@@ -144,7 +145,7 @@ $("#startButton").on('click', function(e){
   $('#signinBase').remove();
 });
 
-$(window).keydown(function (e){
+$(window).keypress(function (e){
   if (e.keyCode === 32){
     console.log("space");
     if(magicFlag === 0){
