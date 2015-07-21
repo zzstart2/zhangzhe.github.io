@@ -6,18 +6,35 @@
   <link href="./style.css" rel="stylesheet" type="text/css"  media="all" />
 </head>
 <body>
+  <div class="bgPicDiv"><img src="src/webBG.jpg" id=bgPic></div>
+  <div class="signinBase" id="signinBase">
+    <div class="signinAlert">
+      <div class='chatRoom toolbar'>
+        <div>
+          <br>
+          <label for="nameInput" style="position: relative; margin-top:15px;">Username:</label>
+          <br>
+          <input type='text' id='loginNameInput'  placeholder='Type your username'>
+        </div>
+        <div>
+        <input type="button" id="startButton" value="Start!">
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="leftbar">
+    <img src="src/score.png" class="scorePic">
+    <input type="text" id="score" value="0 点" readonly="readonly">
+    <input type="button" id="start" value="Start">
+    <input type="button" id="top" value="Top 10">
+  </div>
+  <div class="plus" id="plus">+</div>
 <div class="mainbody">
   <div class="viewArea">
-    <div class="leftbar">
-      <input type="text" id="score" value="0 点" readonly="readonly">
-      <input type="button" id="start" value="Start">
-      <input type="button" id="top" value="Top 10">
-    </div>
-    <div class="centerCircle" id="centerBlue">
+    <div class="outerCircle" id="outerCircle">
+      <div class="centerCircle" id="centerBlue">
 
-    </div>
-    <div class="outerCircle">
-
+      </div>
     </div>
   </div>
 </div>
