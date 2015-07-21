@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="jquery.oLoader.min.js"></script>
+  <link href="./style.css" rel="stylesheet" type="text/css"  media="all" />
+</head>
+<body>
+  <div class="bgPicDiv"><img src="src/webBG.jpg" id=bgPic></div>
+  <div class="signinBase" id="signinBase">
+    <div class="signinAlert">
+      <div class='chatRoom toolbar'>
+        <div>
+          <br>
+          <label for="nameInput" style="position: relative; margin-top:15px;">输入你的昵称：</label>
+          <br>
+          <input type='text' id='loginNameInput'>
+          <p style="font-size:18px;margin-left:40px;margin-right:40px;">使用“空格键”改变中心花镜的颜色，让花朵落在与自己颜色相同的花镜里。</p>
+          <p style="font-size:18px;margin-left:40px;margin-right:40px;">请等待加载完成后再点击“Ready!”</p>
+        </div>
+        <div>
+        <input type="button" id="startButton" value="Ready!">
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="leftbar">
+    <img src="src/score.png" class="scorePic">
+    <input type="text" id="score" value="0 点" readonly="readonly">
+    <input type="button" id="start" value="Start">
+    <audio src="bgmusic.mp3" controls="controls" autoplay="autoplay" loop="loop" style="opacity:0.2;bottom:5px;position:absolute;left:0;"></audio>
+    <p style="font-size:12px;margin-left:40px;margin-right:40px;bottom:35px;position:absolute;">Voice: 在水一方（THU ACA Voix）</p>
+  </div>
+  <div class="plus" id="plus">+</div>
+<div class="mainbody">
+  <div class="viewArea">
+    <div class="outerCircle" id="outerCircle">
+      <div class="centerCircle" id="centerBlue">
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="main.js"></script>
+<div id="preload" style="background:url(src/centerCircleRed.png) no-repeat -9999px -9999px"></div>
+</body>
+</html>
