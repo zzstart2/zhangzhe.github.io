@@ -1,9 +1,28 @@
+$(function(){
+  $.oPageLoader();
+});
+
 var pointID = 0;//初始化生成小花朵的ID
 var magicFlag = 1;//初始化花神的flag，0为红，1为蓝
 var score = 0;//统计玩家得分
 var gameEnd = 0;//游戏结束flag，1表示已结束
 var speed = 800;
 var movespeed = 20;
+var messageList = $('#messages');
+var numofPlayed = 0;
+
+var mid=new Array();
+mid[1] = "piano/raw/c4.ogg";
+mid[2] = "piano/raw/e4.ogg";
+mid[3] = "piano/raw/g4.ogg";
+mid[4] = "piano/raw/c5.ogg";
+
+var messagesRef = new Firebase('https://flowermirror.firebaseio.com/');
+var messageField = $('#score');
+
+var userID = Math.round(1000*Math.random());
+var localusername = "Kid"+userID;
+document.getElementById("loginNameInput").setAttribute("value", localusername);
 
 function init(){
   pointID = 0;
@@ -13,7 +32,7 @@ function init(){
   gameEnd = 1;
   speed = 800;
   movespeed = 20;
-}
+};
 
 $("#plus").slideUp();
 
@@ -33,7 +52,7 @@ if(gameEnd === 0){
     //console.log(pointType);
     smallPoint.setAttribute("typeID", "1");
     smallPoint.id="pointBlue";
-  }
+  };
 
   //将花朵随机放置在外围圆圈上
   var x;
@@ -48,11 +67,9 @@ if(gameEnd === 0){
   smallPoint.style.left = (x - 15) + "px";
   smallPoint.style.top = (y - 15) + "px";
 
-  if(movespeed > 5){
+  if(movespeed > 3){
     movespeed = movespeed-(score/20);
   }
-  console.log(movespeed);
-  console.log(speed);
 
   //控制花朵运动向中心
   var pointsh = window.setInterval(function(){
@@ -67,14 +84,16 @@ if(gameEnd === 0){
         if(smallPoint.getAttribute("typeID") === ""+magicFlag){//得分
           score ++;
           document.getElementById("score").setAttribute("value", score+" 点");
-          console.log(score);
+          //console.log(score);
           pointID ++;
-          smallPoint.setAttribute("typeID", "2")
+          smallPoint.setAttribute("typeID", "2");
         }
         else if(smallPoint.getAttribute("typeID") === "0" || smallPoint.getAttribute("typeID") === "1"){//游戏终止
           pointID ++;
           smallPoint.setAttribute("typeID", "2");
           alert("end!");
+          var message = messageField.val();
+          messagesRef.push({name:localusername, score:message});
           init();
           clearInterval(sh);
         }
@@ -94,7 +113,7 @@ function getDistanceToCenter(x, y, dx, dy){
   var cy = y + dy/2 - $("#outerCircle").offset().top;
   var distance2 = (cx - 315)*(cx - 315) + (cy - 315)*(cy - 315);
   return distance2;
-}
+};
 
 $("#start").on('click', function(e){
   location.reload(false);
@@ -103,12 +122,12 @@ $("#start").on('click', function(e){
 $("#plus").on('click', function(e){
   $(".leftbar").slideDown();
   $("#plus").slideUp();
-})
+});
 
 $(".scorePic").on('click', function(e){
   $(".leftbar").slideUp();
   $("#plus").slideDown();
-})
+});
 
 $("#startButton").on('click', function(e){
   gameEnd = 0;
@@ -125,4 +144,57 @@ $("#startButton").on('click', function(e){
       }
     }
   });
-})
+});
+
+messagesRef.on("value", function(snapshot) {
+}, function (errorObject) {
+  alert("The read failed: " + errorObject.code);
+});
+
+messagesRef.limitToLast(15).on('child_added', function (snapshot) {
+  //GET DATA
+  var data = snapshot.val();
+  var username = data.name || "anonymous";
+  var message = data.score;
+
+  //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
+  var messageElement = $("<li>");
+  var nameElement = $("<strong></strong>");
+  nameElement.text(username+"  ");
+  messageElement.text(message).prepend(nameElement);
+
+  //ADD MESSAGE
+  messageList.append(messageElement);
+
+  //SCROLL TO BOTTOM OF MESSAGE LIST
+  messageList[0].scrollTop = messageList[0].scrollHeight;
+  changeHeight();
+});
+
+setTimeout("changeHeight()",5);
+
+function changeHeight(){
+  var beforeHeight = $("#messages").scrollTop();
+  $("#messages").scrollTop($("#messages").scrollTop()+20);
+  var afterHeight = $("#messages").scrollTop();
+  if(beforeHeight == afterHeight){
+    //alert("ok");
+  }else{
+    setTimeout("changeHeight()",5);
+  };
+};
+
+/*messagesRef.on("child_added", function(snapshot){
+  snapshot.forEach(function(e){
+    numofPlayed ++;
+  });
+});*/
+
+console.log(numofPlayed);
+
+/*function pressSound(i){
+  //document.all.song.src="test.mp3";
+  var audio = document.createElement('audio');
+  audio.src = "test.mp3"//
+  document.body.appendChild(audio);
+}*/

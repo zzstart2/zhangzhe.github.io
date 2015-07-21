@@ -3,6 +3,8 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+  <script src="jquery.oLoader.min.js"></script>
   <link href="./style.css" rel="stylesheet" type="text/css"  media="all" />
 </head>
 <body>
@@ -12,12 +14,13 @@
       <div class='chatRoom toolbar'>
         <div>
           <br>
-          <label for="nameInput" style="position: relative; margin-top:15px;">Username:</label>
+          <label for="nameInput" style="position: relative; margin-top:15px;">输入你的昵称：</label>
           <br>
-          <input type='text' id='loginNameInput'  placeholder='Type your username'>
+          <input type='text' id='loginNameInput'>
+          <p style="font-size:18px;margin-left:40px;margin-right:40px;">使用“空格键”改变中心花镜的颜色，让花朵落在与自己颜色相同的花镜里。</p>
         </div>
         <div>
-        <input type="button" id="startButton" value="Start!">
+        <input type="button" id="startButton" value="Ready!">
       </div>
     </div>
   </div>
@@ -26,14 +29,13 @@
     <img src="src/score.png" class="scorePic">
     <input type="text" id="score" value="0 点" readonly="readonly">
     <input type="button" id="start" value="Start">
-    <input type="button" id="top" value="Top 10">
+    <ul id='messages' class="chat-messages"></ul>
   </div>
   <div class="plus" id="plus">+</div>
 <div class="mainbody">
   <div class="viewArea">
     <div class="outerCircle" id="outerCircle">
       <div class="centerCircle" id="centerBlue">
-
       </div>
     </div>
   </div>
