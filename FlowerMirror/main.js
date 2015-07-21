@@ -1,3 +1,6 @@
+$(function(){
+  $.oPageLoader();
+});
 
 var pointID = 0;//初始化生成小花朵的ID
 var magicFlag = 1;//初始化花神的flag，0为红，1为蓝
