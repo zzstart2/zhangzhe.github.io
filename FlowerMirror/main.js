@@ -1,6 +1,3 @@
-$(function(){
-  $.oPageLoader();
-});
 
 var pointID = 0;//初始化生成小花朵的ID
 var magicFlag = 1;//初始化花神的flag，0为红，1为蓝
@@ -94,7 +91,7 @@ function begin(){
           else if(smallPoint.getAttribute("typeID") === "0" || smallPoint.getAttribute("typeID") === "1"){//游戏终止
             pointID ++;
             smallPoint.setAttribute("typeID", "2");
-            alert("你输了，你获得了"+score+"点花缘。成绩已经上传~~");
+            alert("游戏结束，你获得了"+score+"点花缘。成绩已经上传~~");
             var message = messageField.val();
             messagesRef.push({name:localusername, score:message});
             init();
