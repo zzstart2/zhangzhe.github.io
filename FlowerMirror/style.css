@@ -87,8 +87,8 @@ body{
   background-position: center;
   background-repeat: no-repeat;
   background-size: 95%;
-  animation: selfrotateOp 100s infinite linear;
-  -webkit-animation: selfrotateOp 100s infinite linear;
+  animation: selfrotateOp 200s infinite linear;
+  -webkit-animation: selfrotateOp 200s infinite linear;
 }
 
 .smallPoint{
