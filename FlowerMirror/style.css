@@ -47,6 +47,7 @@ body{
   margin-left: 200px;
   margin-top: 200px;
   z-index: 100;
+  animation: selfrotate 20s infinite linear;
 }
 
 #centerRed{
@@ -71,10 +72,21 @@ body{
   margin-right: auto;
   top: 0;
   bottom: 0;
+}
+
+.outerCircleBg{
+  position: absolute;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  margin-left: -300px;
+  top: 0;
+  bottom: 0;
   background-image: url(src/outerCircle.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 95%;
+  animation: selfrotateOp 50s infinite linear;
 }
 
 .smallPoint{
@@ -238,4 +250,26 @@ input{
 
 li{
   height: 20px;
+}
+
+#follower{
+  position: absolute;
+  background-image: url(src/smallPointBlue.png);
+  z-index: 80;
+}
+
+#resultBase{
+  z-index: 90;
+}
+
+@-webkit-keyframes selfrotate /* Safari 和 Chrome */
+{
+from {-webkit-transform: rotate(0deg);}
+to {-webkit-transform: rotate(360deg);}
+}
+
+@-webkit-keyframes selfrotateOp /* Safari 和 Chrome */
+{
+from {-webkit-transform: rotate(0deg);}
+to {-webkit-transform: rotate(-360deg);}
 }
