@@ -148,7 +148,7 @@ $("#startButton").on('click', function(e){
 });
 
 $(document).keypress(function (e){
-  if (e.keyCode === 32){
+  if (e.keyCode === 83){
     console.log("space");
     if(magicFlag === 0){
       magicFlag = 1;
