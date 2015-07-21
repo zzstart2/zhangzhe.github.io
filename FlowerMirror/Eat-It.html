@@ -31,8 +31,8 @@
     <input type="text" id="score" value="0 点" readonly="readonly">
     <input type="button" id="start" value="Start">
     <ul id='messages' class="chat-messages"></ul>
-    <audio src="bgmusic.mp3" controls="controls" autoplay="autoplay" loop="loop" style="bottom:60px;position:absolute;left:0;"></audio>
-    <p style="font-size:12px;margin-left:40px;margin-right:40px;bottom:5px;position:absolute;">Voice: 在水一方（THU ACA Voix）</p>
+    <audio src="bgmusic.mp3" controls="controls" autoplay="autoplay" loop="loop" style="opacity:0.2;bottom:5px;position:absolute;left:0;"></audio>
+    <p style="font-size:12px;margin-left:40px;margin-right:40px;bottom:60px;position:absolute;">Voice: 在水一方（THU ACA Voix）</p>
   </div>
   <div class="plus" id="plus">+</div>
 <div class="mainbody">
@@ -44,6 +44,6 @@
   </div>
 </div>
 <script type="text/javascript" src="main.js"></script>
-<div style="opacity:0;background-image:url(src/centerCircleRed.png);">
+<div id="preload" style="background:url(src/centerCircleRed.png) no-repeat -9999px -9999px"></div>
 </body>
 </html>
