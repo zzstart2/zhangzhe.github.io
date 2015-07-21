@@ -140,7 +140,7 @@ $("#startButton").on('click', function(e){
   $('#signinBase').remove();
 });
 
-$(window).keypress(function (e){
+$(document).keypress(function (e){
   if (e.keyCode === 32){
     console.log("space");
     if(magicFlag === 0){
