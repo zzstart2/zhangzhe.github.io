@@ -37,7 +37,6 @@ function init(){
 $("#plus").slideUp();
 
 function begin(){
-  init();
   gameEnd = 0;
   sh = window.setInterval(function createPoint(){
   console.log("asdfghhj");
@@ -145,17 +144,15 @@ $("#startButton").on('click', function(e){
   $('#signinBase').remove();
 });
 
-$(window).keypress(function (e){
+$(document).keypress(function (e){
   if (e.keyCode === 32){
     console.log("space");
     if(magicFlag === 0){
       magicFlag = 1;
       $(".centerCircle").css({"background-image": "url(src/centerCircleBlue.png)"});
-      console.log(magicFlag);
     }else if(magicFlag === 1){
       magicFlag = 0;
       $(".centerCircle").css({"background-image": "url(src/centerCircleRed.png)"});
-      console.log(magicFlag);
     }
   }
 });
