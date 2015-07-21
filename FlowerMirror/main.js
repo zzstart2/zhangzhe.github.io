@@ -94,7 +94,7 @@ function begin(){
           else if(smallPoint.getAttribute("typeID") === "0" || smallPoint.getAttribute("typeID") === "1"){//游戏终止
             pointID ++;
             smallPoint.setAttribute("typeID", "2");
-            alert("end!");
+            alert("你输了，你获得了"+score+"点花缘。成绩已经上传~~");
             var message = messageField.val();
             messagesRef.push({name:localusername, score:message});
             init();
