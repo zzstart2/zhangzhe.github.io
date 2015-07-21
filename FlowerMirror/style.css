@@ -233,6 +233,7 @@ input{
   font-size: 15px;
   color: #555;
   height: 320px;
+  overflow: auto;
 }
 
 li{
