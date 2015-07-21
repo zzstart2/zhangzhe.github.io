@@ -273,3 +273,15 @@ to {-webkit-transform: rotate(360deg);}
 from {-webkit-transform: rotate(0deg);}
 to {-webkit-transform: rotate(-360deg);}
 }
+
+@keyframes selfrotate /* Safari 和 Chrome */
+{
+from {-webkit-transform: rotate(0deg);}
+to {-webkit-transform: rotate(360deg);}
+}
+
+@keyframes selfrotateOp /* Safari 和 Chrome */
+{
+from {-webkit-transform: rotate(0deg);}
+to {-webkit-transform: rotate(-360deg);}
+}
