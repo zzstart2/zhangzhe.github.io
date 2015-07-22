@@ -34,7 +34,6 @@ function init(){
 $("#plus").slideUp();
 
 function begin(){
-  init();
   gameEnd = 0;
   sh = window.setInterval(function createPoint(){
   console.log("asdfghhj");
